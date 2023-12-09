@@ -1,0 +1,66 @@
+MCODE_DICT = {
+    'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..',
+    'J': '.---',
+    'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 
+    'T': '-',
+    'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..',
+    '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': 
+     '-....', '7': '--...', '8': '---..', '9': '----.',
+    '.': '.-.-.-', ',': '--..--', '?': '..--..', "'": '.----.', '!': '-.-.--', '/': '-..-.',
+    '(': '-.--.', ')': '-.--.-', '&': '.-...', ':': '---...', ';': '-.-.-.',
+    '=': '-...-', '+': '.-.-.', '-': '-....-', '_': '..--.-', '"': '.-..-.', '$': '...-..-', '@': '.--.-.', ' ': '/'
+}  ## Dictionary to assign the Morse code equivalent to each letter
+
+# Converting Morse code to text
+def morse_to_text(morse_code):
+    morse_code = morse_code.strip()  
+    morse_code += ' '  
+    text = ''
+    morse_char = ''
+    for symbol in morse_code:
+        if symbol != ' ':
+            morse_char += symbol
+        else:
+            if morse_char != '/':
+                text += list(MCODE_DICT.keys())[list(MCODE_DICT.values()).index(morse_char)]
+            else:
+                text += ' '  # Adding space for unknown Morse code characters like the slash above
+            morse_char = ''
+    return text
+    
+#  Conversion of text to Morse code.
+def text_to_morse(text):
+    m_code = ''
+    for char in text.upper():   # Confirms all the letters are uppercase for accuracy when translating.
+        if char in MCODE_DICT:
+            m_code += MCODE_DICT[char] + ' '
+        else:
+            m_code += '/ '  ## The use of slash is to represent unknown characters in Morse code
+    return m_code
+
+
+# Driver function to handle user input
+def main():
+    while True:                 
+        print("\nSelect an option:")
+        print("1. Text to Morse code")
+        print("2. Morse code to text")
+        print("3. Exit")
+        option = input("Enter your choice (1/2/3): ")    # User decides whether they want to encrypt, decrypt, or exit
+
+        if option == '1':      
+            text = input("Enter text to convert to Morse code: ")
+            morse = text_to_morse(text)
+            print(f"Morse code: {morse}")
+        elif option == '2':
+            morse_code = input("Enter Morse code to convert to text (use spaces between characters and slashes for unknown): ")
+            text = morse_to_text(morse_code)
+            print(f"Text: {text}")
+        elif option == '3':
+            print("Exiting the program.")
+            break
+        else:
+            print("Invalid choice. Please enter a valid option.")  # Must choose  of the 3 choices
+
+if __name__ == "__main__":
+    main()
